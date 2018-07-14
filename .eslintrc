@@ -1,0 +1,6 @@
+{
+  "extends": ["esmanning", "plugin:import/errors"],
+  "settings": {
+    "import/resolver": "webpack"
+  }
+}

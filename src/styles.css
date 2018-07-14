@@ -1,0 +1,16 @@
+html, body, #app {
+  height: 100%;
+  width: 100%;
+}
+
+.chord-display {
+  margin: 10px 0;
+}
+
+.chords, .notes {
+  min-height: 40px
+}
+
+.keyboard {
+
+}
