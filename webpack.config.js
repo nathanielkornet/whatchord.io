@@ -10,6 +10,9 @@ module.exports = {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
       loader: 'babel-loader'
+    }, {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader']
     }]
   },
   plugins: [
@@ -18,7 +21,7 @@ module.exports = {
     })
   ],
   output: {
-    path: path.resolve('./dist'),
+    path: path.resolve('./'),
     filename: 'bundle.js'
   },
   devServer: {

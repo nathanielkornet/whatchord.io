@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './styles.css'
 import WebMidi from 'webmidi'
 import ChordDisplay from './components/chord-display'
 import Keyboard from './components/keyboard'
@@ -7,6 +8,11 @@ const Detect = require('./ext/tonal-detect')
 
 function getNotesAndChordFromMidi (midiNotes) {
   const notes = midiNotes.map(midiNote => Tonal.Note.fromMidi(midiNote))
+  const chords = getChordsFromNotes(notes)
+  return { notes, chords }
+}
+
+function getChordsFromNotes (notes) {
   let chords = []
 
   if (notes.length > 0) {
@@ -14,7 +20,7 @@ function getNotesAndChordFromMidi (midiNotes) {
     chords = Detect.chord(rawNotes)
   }
 
-  return { notes, chords }
+  return chords
 }
 
 export default class App extends Component {
@@ -27,13 +33,18 @@ export default class App extends Component {
       chords: []
     }
 
+    this.midiEnabled = false
+
     WebMidi.enable(err => {
       if (err) {
         console.error(err)
       } else {
         const input = WebMidi.inputs[0]
-        input.addListener('noteon', 'all', ev => this.midiNoteOn(ev))
-        input.addListener('noteoff', 'all', ev => this.midiNoteOff(ev))
+        if (input != null) {
+          this.midiEnabled = true
+          input.addListener('noteon', 'all', ev => this.midiNoteOn(ev))
+          input.addListener('noteoff', 'all', ev => this.midiNoteOff(ev))
+        }
       }
     })
 
@@ -77,7 +88,7 @@ export default class App extends Component {
     const noteSet = new Set(notes)
     return <div>
       <ChordDisplay notes={notes} chords={chords} />
-      <Keyboard notes={noteSet} />
+      <Keyboard notes={noteSet} midiEnabled={this.midiEnabled} />
     </div>
   }
 }
