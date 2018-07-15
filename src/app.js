@@ -29,38 +29,33 @@ export default class App extends Component {
     super()
 
     this.state = {
-      initialized: false,
+      initialized: isMobile,
       midiNotes: [],
       notes: [],
       chords: []
     }
 
     this.midiEnabled = false
-    this.doneCheckingMidi = false
-
-    if (isMobile) {
-      this.initialize()
-    } else {
-      WebMidi.enable(err => {
-        if (err) {
-          console.error(err)
-        } else {
-          const input = WebMidi.inputs[0]
-
-          if (input != null) {
-            this.midiEnabled = true
-            input.addListener('noteon', 'all', ev => this.midiNoteOn(ev))
-            input.addListener('noteoff', 'all', ev => this.midiNoteOff(ev))
-          }
-        }
-        this.initialize()
-      })
-    }
 
     this.midiNoteOn = this.midiNoteOn.bind(this)
     this.midiNoteOff = this.midiNoteOff.bind(this)
     this.toggleNote = this.toggleNote.bind(this)
     this.initialize = () => this.setState({initialized: true})
+
+    WebMidi.enable(err => {
+      if (err) {
+        console.error(err)
+      } else {
+        const input = WebMidi.inputs[0]
+
+        if (input != null) {
+          this.midiEnabled = true
+          input.addListener('noteon', 'all', ev => this.midiNoteOn(ev))
+          input.addListener('noteoff', 'all', ev => this.midiNoteOff(ev))
+        }
+      }
+      this.initialize()
+    })
   }
 
   midiNoteOn (ev) {
