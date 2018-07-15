@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { WhiteKey, BlackKey } from './key'
+import { isMobile } from 'react-device-detect'
+
+const numOctaves = isMobile ? 2 : 6
 
 const baseNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 
 const whiteKeyNotes = []
 let blackKeyNotes = []
 
-for (let i = 0; i < 6; i++) {
+for (let i = 0; i < numOctaves; i++) {
   baseNotes.forEach(baseNote => {
     const noteName = baseNote + i
     if (baseNote.length === 2) {
@@ -41,7 +44,7 @@ blackKeyNotes = blackKeyNotes.map((noteData, i) => {
   return { noteName: noteData.noteName, x }
 })
 
-const keyboardWidth = 161 * 8
+const keyboardWidth = 161 * numOctaves
 const keyboardHeight = 120
 
 export default class Keyboard extends Component {
@@ -50,7 +53,7 @@ export default class Keyboard extends Component {
 
     return (
       <div>
-        <svg width={keyboardWidth} height={keyboardHeight}>
+        <svg viewBox={`0 0 ${keyboardWidth} ${keyboardHeight}`}>
           {whiteKeyNotes.map((noteName, i) => {
             const x = 23 * i
             const isSelected = notes.has(noteName)

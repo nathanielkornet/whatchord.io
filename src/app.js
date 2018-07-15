@@ -48,8 +48,8 @@ export default class App extends Component {
           input.addListener('noteon', 'all', ev => this.midiNoteOn(ev))
           input.addListener('noteoff', 'all', ev => this.midiNoteOff(ev))
         }
-        this.initialize()
       }
+      this.initialize()
     })
 
     this.midiNoteOn = this.midiNoteOn.bind(this)

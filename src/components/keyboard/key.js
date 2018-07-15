@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Color from 'color'
+import { isMobile } from 'react-device-detect'
 
 // TODO: base width/height props on keyboard dimensions
 
@@ -28,7 +29,7 @@ class Key extends Component {
 
     let fill = isSelected ? 'red' : this.fill
 
-    if (this.state.hovered && allowMouseInteraction) {
+    if (this.state.hovered && allowMouseInteraction && !isMobile) {
       fill = Color(fill).mix(Color('grey'), 0.5)
     }
 
