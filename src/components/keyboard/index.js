@@ -44,16 +44,20 @@ blackKeyNotes = blackKeyNotes.map((noteData, i) => {
   return { noteName: noteData.noteName, x }
 })
 
-const keyboardWidth = 161 * numOctaves
-const keyboardHeight = 120
 
 export default class Keyboard extends Component {
+  constructor () {
+    super()
+
+    this.keyboardWidth = 160 * numOctaves
+    this.keyboardHeight = 120
+  }
   render () {
     const { notes, toggleNote, midiEnabled } = this.props
 
     return (
       <div>
-        <svg viewBox={`0 0 ${keyboardWidth} ${keyboardHeight}`}>
+        <svg viewBox={`0 0 ${this.keyboardWidth} ${this.keyboardHeight}`}>
           {whiteKeyNotes.map((noteName, i) => {
             const x = 23 * i
             const isSelected = notes.has(noteName)
@@ -62,6 +66,7 @@ export default class Keyboard extends Component {
               <WhiteKey key={noteName}
                 noteName={noteName}
                 x={x}
+                keyboardHeight={this.keyboardHeight}
                 allowMouseInteraction={!midiEnabled}
                 isSelected={isSelected}
                 toggleNote={toggleNote} />
@@ -73,6 +78,7 @@ export default class Keyboard extends Component {
               <BlackKey key={noteData.noteName}
                 noteName={noteData.noteName}
                 x={noteData.x}
+                keyboardHeight={this.keyboardHeight}
                 allowMouseInteraction={!midiEnabled}
                 isSelected={isSelected}
                 toggleNote={toggleNote} />

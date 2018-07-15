@@ -5,6 +5,7 @@ import ChordDisplay from './components/chord-display'
 import Keyboard from './components/keyboard'
 const Tonal = require('tonal')
 const Detect = require('./ext/tonal-detect')
+import { isMobile } from 'react-device-detect'
 
 function getNotesAndChordFromMidi (midiNotes) {
   const notes = midiNotes.map(midiNote => Tonal.Note.fromMidi(midiNote))
@@ -37,20 +38,24 @@ export default class App extends Component {
     this.midiEnabled = false
     this.doneCheckingMidi = false
 
-    WebMidi.enable(err => {
-      if (err) {
-        console.error(err)
-      } else {
-        const input = WebMidi.inputs[0]
-
-        if (input != null) {
-          this.midiEnabled = true
-          input.addListener('noteon', 'all', ev => this.midiNoteOn(ev))
-          input.addListener('noteoff', 'all', ev => this.midiNoteOff(ev))
-        }
-      }
+    if (isMobile) {
       this.initialize()
-    })
+    } else {
+      WebMidi.enable(err => {
+        if (err) {
+          console.error(err)
+        } else {
+          const input = WebMidi.inputs[0]
+
+          if (input != null) {
+            this.midiEnabled = true
+            input.addListener('noteon', 'all', ev => this.midiNoteOn(ev))
+            input.addListener('noteoff', 'all', ev => this.midiNoteOff(ev))
+          }
+        }
+        this.initialize()
+      })
+    }
 
     this.midiNoteOn = this.midiNoteOn.bind(this)
     this.midiNoteOff = this.midiNoteOff.bind(this)

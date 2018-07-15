@@ -52,7 +52,7 @@ export class WhiteKey extends Key {
   constructor (props) {
     super(props)
     this.width = 23
-    this.height = 120
+    this.height = props.keyboardHeight
 
     this.fill = 'white'
   }
@@ -62,7 +62,7 @@ export class BlackKey extends Key {
   constructor (props) {
     super(props)
     this.width = 13
-    this.height = 80
+    this.height = props.keyboardHeight * 2 / 3
 
     this.fill = 'black'
   }
