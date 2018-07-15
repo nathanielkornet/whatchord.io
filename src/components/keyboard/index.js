@@ -49,14 +49,14 @@ export default class Keyboard extends Component {
   constructor () {
     super()
 
-    this.keyboardWidth = 160 * numOctaves
+    this.keyboardWidth = 161 * numOctaves
     this.keyboardHeight = 120
   }
   render () {
     const { notes, toggleNote, midiEnabled } = this.props
 
     return (
-      <div>
+      <div className={'keyboard'}>
         <svg viewBox={`0 0 ${this.keyboardWidth} ${this.keyboardHeight}`}>
           {whiteKeyNotes.map((noteName, i) => {
             const x = 23 * i

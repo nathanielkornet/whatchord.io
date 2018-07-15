@@ -1,0 +1,57 @@
+html, body, #app {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.chord-display {
+  font-size: 32px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50%;
+}
+
+.chords {
+  min-height: 1em;
+  font-size: 3em;
+  padding-bottom: 0.5em;
+}
+
+.notes {
+  min-height: 1em;
+  font-size: 2em;
+}
+
+.notes > span {
+  padding-right: 15px;
+}
+
+.keyboard {
+  padding: 1em;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/* landscape view */
+@media only screen and (max-width: 1200px) and (orientation: landscape){
+  .chord-display {
+    font-size: 14px;
+    padding-top: 5%;
+  }
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './styles.css'
+import './styles'
 import WebMidi from 'webmidi'
 import ChordDisplay from './components/chord-display'
 import Keyboard from './components/keyboard'
@@ -7,8 +7,22 @@ const Tonal = require('tonal')
 const Detect = require('./ext/tonal-detect')
 import { isMobile } from 'react-device-detect'
 
+function noteSort (a, b) {
+  const aOctave = a[a.length - 1]
+  const aNote = a.substr(0, a.length - 1)
+  const _a = aOctave + aNote
+
+  const bOctave = b[b.length - 1]
+  const bNote = b.substr(0, b.length - 1)
+  const _b = bOctave + bNote
+
+  return _a > _b
+    ? 1
+    : 0
+}
+
 function getNotesAndChordFromMidi (midiNotes) {
-  const notes = midiNotes.map(midiNote => Tonal.Note.fromMidi(midiNote))
+  const notes = midiNotes.map(midiNote => Tonal.Note.fromMidi(midiNote)).sort(noteSort)
   const chords = getChordsFromNotes(notes)
   return { notes, chords }
 }
@@ -101,6 +115,8 @@ export default class App extends Component {
       nextNotes.push(noteName)
     }
 
+    nextNotes.sort(noteSort)
+
     const chords = getChordsFromNotes(nextNotes)
 
     this.setState({notes: nextNotes, chords})
@@ -112,7 +128,7 @@ export default class App extends Component {
 
     if (!this.state.initialized) return null
 
-    return <div>
+    return <div className={'flex-column'}>
       <ChordDisplay notes={notes} chords={chords} />
       <Keyboard notes={noteSet} midiEnabled={this.midiEnabled} toggleNote={this.toggleNote} />
     </div>

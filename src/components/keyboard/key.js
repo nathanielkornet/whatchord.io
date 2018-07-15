@@ -33,18 +33,21 @@ class Key extends Component {
       fill = Color(fill).mix(Color('grey'), 0.5)
     }
 
-    return <rect
-      onMouseEnter={this.onMouseEnter}
-      onMouseLeave={this.onMouseLeave}
-      className={allowMouseInteraction ? 'pointer' : ''}
-      onClick={this.toggleNote}
-      fill={fill}
-      stroke={'black'}
-      x={this.x}
-      y={0}
-      width={this.width}
-      height={this.height}
-    />
+    return <g>
+      <text x={this.x}>{isSelected ? this.props.noteName : ''}</text>
+      <rect
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
+        className={allowMouseInteraction ? 'pointer' : ''}
+        onClick={this.toggleNote}
+        fill={fill}
+        stroke={'black'}
+        x={this.x}
+        y={0}
+        width={this.width}
+        height={this.height}
+      />
+    </g>
   }
 }
 
