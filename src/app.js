@@ -28,29 +28,34 @@ export default class App extends Component {
     super()
 
     this.state = {
+      initialized: false,
       midiNotes: [],
       notes: [],
       chords: []
     }
 
     this.midiEnabled = false
+    this.doneCheckingMidi = false
 
     WebMidi.enable(err => {
       if (err) {
         console.error(err)
       } else {
         const input = WebMidi.inputs[0]
+
         if (input != null) {
           this.midiEnabled = true
           input.addListener('noteon', 'all', ev => this.midiNoteOn(ev))
           input.addListener('noteoff', 'all', ev => this.midiNoteOff(ev))
         }
+        this.initialize()
       }
     })
 
     this.midiNoteOn = this.midiNoteOn.bind(this)
     this.midiNoteOff = this.midiNoteOff.bind(this)
-    this.setNotes = notes => this.setState({notes})
+    this.toggleNote = this.toggleNote.bind(this)
+    this.initialize = () => this.setState({initialized: true})
   }
 
   midiNoteOn (ev) {
@@ -83,12 +88,33 @@ export default class App extends Component {
     this.setState({midiNotes: nextMidiNotes, notes, chords})
   }
 
+  // for use with mouse interaction
+  toggleNote (noteName) {
+    const { notes } = this.state
+
+    const nextNotes = notes.slice()
+
+    if (nextNotes.includes(noteName)) {
+      const noteIdx = nextNotes.indexOf(noteName)
+      nextNotes.splice(noteIdx, 1)
+    } else {
+      nextNotes.push(noteName)
+    }
+
+    const chords = getChordsFromNotes(nextNotes)
+
+    this.setState({notes: nextNotes, chords})
+  }
+
   render () {
     const { notes, chords } = this.state
     const noteSet = new Set(notes)
+
+    if (!this.state.initialized) return null
+
     return <div>
       <ChordDisplay notes={notes} chords={chords} />
-      <Keyboard notes={noteSet} midiEnabled={this.midiEnabled} />
+      <Keyboard notes={noteSet} midiEnabled={this.midiEnabled} toggleNote={this.toggleNote} />
     </div>
   }
 }

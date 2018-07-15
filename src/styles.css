@@ -11,6 +11,6 @@ html, body, #app {
   min-height: 40px
 }
 
-.keyboard {
-
+.pointer {
+  cursor: pointer;
 }

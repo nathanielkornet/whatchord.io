@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
+import { WhiteKey, BlackKey } from './key'
 
 const baseNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 
 const whiteKeyNotes = []
 let blackKeyNotes = []
-
-const whiteKeyWidth = 23
 
 for (let i = 0; i < 6; i++) {
   baseNotes.forEach(baseNote => {
@@ -47,18 +46,34 @@ const keyboardHeight = 120
 
 export default class Keyboard extends Component {
   render () {
-    const { notes } = this.props
+    const { notes, toggleNote, midiEnabled } = this.props
+
     return (
       <div>
         <svg width={keyboardWidth} height={keyboardHeight}>
           {whiteKeyNotes.map((noteName, i) => {
-            const x = whiteKeyWidth * i
-            const fill = notes.has(noteName) ? 'red' : 'white'
-            return <rect key={noteName} fill={fill} stroke={'black'} x={x} y={0} width={whiteKeyWidth} height={keyboardHeight} />
+            const x = 23 * i
+            const isSelected = notes.has(noteName)
+
+            return (
+              <WhiteKey key={noteName}
+                noteName={noteName}
+                x={x}
+                allowMouseInteraction={!midiEnabled}
+                isSelected={isSelected}
+                toggleNote={toggleNote} />
+            )
           })}
           {blackKeyNotes.map((noteData, i) => {
-            const fill = notes.has(noteData.noteName) ? 'red' : 'black'
-            return <rect key={noteData.noteName} fill={fill} stroke={'black'} x={noteData.x} y={0} width={13} height={80} />
+            const isSelected = notes.has(noteData.noteName)
+            return (
+              <BlackKey key={noteData.noteName}
+                noteName={noteData.noteName}
+                x={noteData.x}
+                allowMouseInteraction={!midiEnabled}
+                isSelected={isSelected}
+                toggleNote={toggleNote} />
+            )
           })}
         </svg>
       </div>
