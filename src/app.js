@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import './styles'
-import WebMidi from 'webmidi'
 import ChordDisplay from './components/chord-display'
 import Keyboard from './components/keyboard'
 const Tonal = require('tonal')
 const Detect = require('./ext/tonal-detect')
-import { isMobile } from 'react-device-detect'
 
 function noteSort (a, b) {
   const aOctave = a[a.length - 1]
@@ -39,37 +37,25 @@ function getChordsFromNotes (notes) {
 }
 
 export default class App extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
 
     this.state = {
-      initialized: isMobile,
       midiNotes: [],
       notes: [],
       chords: []
     }
 
-    this.midiEnabled = false
-
     this.midiNoteOn = this.midiNoteOn.bind(this)
     this.midiNoteOff = this.midiNoteOff.bind(this)
     this.toggleNote = this.toggleNote.bind(this)
-    this.initialize = () => this.setState({initialized: true})
+    this.midiEnabled = false
 
-    WebMidi.enable(err => {
-      if (err) {
-        console.error(err)
-      } else {
-        const input = WebMidi.inputs[0]
-
-        if (input != null) {
-          this.midiEnabled = true
-          input.addListener('noteon', 'all', ev => this.midiNoteOn(ev))
-          input.addListener('noteoff', 'all', ev => this.midiNoteOff(ev))
-        }
-      }
-      this.initialize()
-    })
+    if (props.midiInput != null) {
+      this.midiInput = props.midiInput
+      this.midiInput.addListener('noteon', 'all', ev => this.midiNoteOn(ev))
+      this.midiInput.addListener('noteoff', 'all', ev => this.midiNoteOff(ev))
+    }
   }
 
   midiNoteOn (ev) {
@@ -126,11 +112,9 @@ export default class App extends Component {
     const { notes, chords } = this.state
     const noteSet = new Set(notes)
 
-    if (!this.state.initialized) return null
-
     return <div className={'flex-column'}>
       <ChordDisplay notes={notes} chords={chords} />
-      <Keyboard notes={noteSet} midiEnabled={this.midiEnabled} toggleNote={this.toggleNote} />
+      <Keyboard notes={noteSet} midiEnabled={this.midiInput != null} toggleNote={this.toggleNote} />
     </div>
   }
 }

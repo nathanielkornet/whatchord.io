@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { WhiteKey, BlackKey } from './key'
 import { isMobile } from 'react-device-detect'
 
-const numOctaves = isMobile ? 2 : 6
+const numOctaves = isMobile ? 2 : 5
 
 const baseNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 
