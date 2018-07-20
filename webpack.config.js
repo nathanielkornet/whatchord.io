@@ -13,6 +13,10 @@ module.exports = {
     }, {
       test: /\.css$/,
       use: ['style-loader', 'css-loader']
+    },
+    {
+      test: /\.svg$/,
+      loader: 'raw-loader'
     }]
   },
   plugins: [
@@ -26,6 +30,7 @@ module.exports = {
   },
   devServer: {
     contentBase: './src',
+    host: '0.0.0.0',
     historyApiFallback: true
   }
 }

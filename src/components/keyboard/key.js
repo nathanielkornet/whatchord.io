@@ -30,7 +30,18 @@ class Key extends Component {
     let fill = isSelected ? 'red' : this.fill
 
     if (this.state.hovered && allowMouseInteraction && !isMobile) {
-      fill = Color(fill).mix(Color('grey'), 0.5)
+      let amount = 0
+      let mixColor = 'grey'
+
+      if (isSelected) {
+        mixColor = this.fill
+        amount = 0.3
+      } else if (this.fill === 'white') {
+        amount = 0.15
+      } else {
+        amount = 0.35
+      }
+      fill = Color(fill).mix(Color(mixColor), amount)
     }
 
     return <g>
@@ -65,7 +76,7 @@ export class BlackKey extends Key {
   constructor (props) {
     super(props)
     this.width = 13
-    this.height = props.keyboardHeight * 2 / 3
+    this.height = props.keyboardHeight * 5 / 8
 
     this.fill = 'black'
   }

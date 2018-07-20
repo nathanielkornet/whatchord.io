@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import './styles'
+import { MidiIcon } from './components/icons'
 import ChordDisplay from './components/chord-display'
 import Keyboard from './components/keyboard'
-const Tonal = require('tonal')
-const Detect = require('./ext/tonal-detect')
+import { Note } from 'tonal'
+import { chord as detectChord } from 'tonal-detector'
 
 function noteSort (a, b) {
   const aOctave = a[a.length - 1]
@@ -20,7 +21,7 @@ function noteSort (a, b) {
 }
 
 function getNotesAndChordFromMidi (midiNotes) {
-  const notes = midiNotes.map(midiNote => Tonal.Note.fromMidi(midiNote)).sort(noteSort)
+  const notes = midiNotes.map(midiNote => Note.fromMidi(midiNote)).sort(noteSort)
   const chords = getChordsFromNotes(notes)
   return { notes, chords }
 }
@@ -30,7 +31,7 @@ function getChordsFromNotes (notes) {
 
   if (notes.length > 0) {
     const rawNotes = notes.map(note => note.substring(0, note.length - 1))
-    chords = Detect.chord(rawNotes)
+    chords = detectChord(rawNotes)
   }
 
   return chords
@@ -113,6 +114,7 @@ export default class App extends Component {
     const noteSet = new Set(notes)
 
     return <div className={'flex-column'}>
+      <MidiIcon />
       <ChordDisplay notes={notes} chords={chords} />
       <Keyboard notes={noteSet} midiEnabled={this.midiInput != null} toggleNote={this.toggleNote} />
     </div>

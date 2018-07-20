@@ -37,7 +37,7 @@ blackKeyNotes = blackKeyNotes.map((noteData, i) => {
   } else if (j === 3) {
     x += 26
   } else if (j === 4) {
-    x += 23.5
+    x += 24.5
     j = -1
   }
   j++

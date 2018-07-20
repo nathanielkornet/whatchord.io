@@ -9,4 +9,8 @@
   .keyboard {
     padding: 1em 15%;
   }
+
+  rect {
+    transition: all 0.3s;
+  }
 }
