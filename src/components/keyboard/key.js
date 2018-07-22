@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Color from 'color'
 import { isMobile } from 'react-device-detect'
+import './styles.css'
 
 // TODO: base width/height props on keyboard dimensions
 
@@ -49,7 +50,7 @@ class Key extends Component {
       <rect
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
-        className={allowMouseInteraction ? 'pointer' : ''}
+        styleName={allowMouseInteraction ? 'pointer' : ''}
         onClick={this.toggleNote}
         fill={fill}
         stroke={'black'}

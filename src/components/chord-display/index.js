@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
+import './styles.css'
 
 export default class ChordDisplay extends Component {
   render () {
     const { notes, chords } = this.props
 
-    return <div className={'chord-display'}>
-      <div className={'chords'}>
+    return <div styleName={'chord-display'}>
+      <div styleName={'chords'}>
         {chords.map(chord => <span key={chord}>{chord + ' '}</span>)}
       </div>
-      <div className={'notes'}>
+      <div styleName={'notes'}>
         {notes.map(note => {
-          const noteOctave = note[note.length - 1]
+          // const noteOctave = note[note.length - 1]
           const noteName = note.substring(0, note.length - 1)
           return (
-            <span key={note}>
+            <span key={note} >
               {noteName + ''}
-              <sub>{noteOctave}</sub>
             </span>
           )
         })}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './styles'
+import './styles.css'
 import { MidiIcon } from './components/icons'
 import ChordDisplay from './components/chord-display'
 import Keyboard from './components/keyboard'

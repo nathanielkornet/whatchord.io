@@ -1,0 +1,28 @@
+.keyboard {
+  padding: 1em 1em 25% 1em;
+}
+
+.label {
+  color: red
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/* landscape view */
+@media only screen and (max-width: 1200px) and (orientation: landscape){
+  .keyboard {
+    padding: 1em;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .keyboard {
+    padding: 0 15% 15%;
+  }
+
+  rect {
+    transition: all 0.3s;
+  }
+}
