@@ -1,11 +1,13 @@
 html, body, :global(#app) {
+  font-family: monospace;
   height: 100%;
   width: 100%;
   margin: 0;
 }
 
-:global(.flex-column) {
+.container {
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 1em;
 }

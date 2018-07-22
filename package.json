@@ -42,6 +42,7 @@
   "dependencies": {
     "color": "^3.0.0",
     "react": "^16.4.1",
+    "react-bootstrap": "^0.32.1",
     "react-device-detect": "^1.5.8",
     "react-dom": "^16.4.1",
     "react-responsive": "^5.0.0",
@@ -57,7 +58,10 @@
     ],
     "plugins": [
       "transform-object-rest-spread",
-      ["react-css-modules", {}]
+      [
+        "react-css-modules",
+        {}
+      ]
     ]
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './styles.css'
-import { MidiIcon } from './components/icons'
+import Modals from './components/modals'
+import Icons from './components/icons'
 import ChordDisplay from './components/chord-display'
 import Keyboard from './components/keyboard'
 import { Note } from 'tonal'
@@ -30,12 +31,14 @@ export default class App extends Component {
     this.state = {
       midiNotes: [],
       notes: [],
-      chords: []
+      chords: [],
+      showInfoModal: false
     }
 
     this.midiNoteOn = this.midiNoteOn.bind(this)
     this.midiNoteOff = this.midiNoteOff.bind(this)
     this.toggleNote = this.toggleNote.bind(this)
+    this.toggleInfoModal = () => this.setState({showInfoModal: !this.state.showInfoModal})
     this.midiEnabled = false
 
     if (props.midiInput != null) {
@@ -94,11 +97,12 @@ export default class App extends Component {
   }
 
   render () {
-    const { notes, chords } = this.state
+    const { notes, chords, showInfoModal } = this.state
     const noteSet = new Set(notes)
 
-    return <div className={'flex-column'}>
-      <MidiIcon />
+    return <div styleName={'container'}>
+      <Modals showInfoModal={showInfoModal} toggleInfoModal={this.toggleInfoModal} />
+      <Icons toggleInfoModal={this.toggleInfoModal} />
       <ChordDisplay notes={notes} chords={chords} />
       <Keyboard notes={noteSet} midiEnabled={this.midiInput != null} toggleNote={this.toggleNote} />
     </div>

@@ -1,0 +1,11 @@
+.icons {
+  transition: all 0.2s;
+}
+
+.info-container {
+  font-size: 24px;
+}
+
+.info-container span:hover {
+  color: lightgrey;
+}
