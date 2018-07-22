@@ -6,22 +6,8 @@ import Keyboard from './components/keyboard'
 import { Note } from 'tonal'
 import { chord as detectChord } from 'tonal-detector'
 
-function noteSort (a, b) {
-  const aOctave = a[a.length - 1]
-  const aNote = a.substr(0, a.length - 1)
-  const _a = aOctave + aNote
-
-  const bOctave = b[b.length - 1]
-  const bNote = b.substr(0, b.length - 1)
-  const _b = bOctave + bNote
-
-  return _a > _b
-    ? 1
-    : 0
-}
-
 function getNotesAndChordFromMidi (midiNotes) {
-  const notes = midiNotes.map(midiNote => Note.fromMidi(midiNote)).sort(noteSort)
+  const notes = midiNotes.map(midiNote => Note.fromMidi(midiNote))
   const chords = getChordsFromNotes(notes)
   return { notes, chords }
 }
@@ -101,8 +87,6 @@ export default class App extends Component {
     } else {
       nextNotes.push(noteName)
     }
-
-    nextNotes.sort(noteSort)
 
     const chords = getChordsFromNotes(nextNotes)
 

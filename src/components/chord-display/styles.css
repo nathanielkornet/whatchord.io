@@ -10,6 +10,9 @@
 }
 
 .chords {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: 1em;
   font-size: 3em;
   padding-bottom: 0.5em;
@@ -33,6 +36,10 @@
     font-size: 14px;
     padding-top: 0;
   }
+
+  .chords {
+    display: block;
+  }
 }
 
 /* big screen */
@@ -42,5 +49,9 @@
     padding-top: 10%;
     flex-grow: 0;
     flex-basis: 50%;
+  }
+
+  .chords {
+    flex-direction: row;
   }
 }
