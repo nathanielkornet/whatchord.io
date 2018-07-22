@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Chord } from 'tonal'
 import './styles.css'
 
 const baseNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
@@ -26,15 +27,32 @@ function noteSort (a, b) {
   }
 }
 
+function formatChordType (chordType) {
+  return chordType === '64'
+    ? 'Maj'
+    : chordType
+}
+
 export default class ChordDisplay extends Component {
   render () {
     const { notes, chords } = this.props
+
+    chords.forEach(c => console.log(Chord.tokenize(c)))
 
     const sortedNotes = notes.sort(noteSort)
 
     return <div styleName={'chord-display'}>
       <div styleName={'chords'}>
-        {chords.map(chord => <span key={chord}>{chord + ' '}</span>)}
+        {chords.map(chord => {
+          // splits the chord into root note and chord type
+          const tokens = Chord.tokenize(chord)
+          return (
+            <span key={chord} styleName={'chord'}>
+              {tokens[0]}
+              <sup>{formatChordType(tokens[1])}</sup>
+            </span>
+          )
+        })}
       </div>
       <div styleName={'notes'}>
         {sortedNotes.map(note => {

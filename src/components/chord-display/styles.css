@@ -40,6 +40,10 @@
   .chords {
     display: block;
   }
+
+  .chord {
+    margin-right: 15px;
+  }
 }
 
 /* big screen */
