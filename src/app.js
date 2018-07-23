@@ -88,6 +88,11 @@ export default class App extends Component {
       const noteIdx = nextNotes.indexOf(noteName)
       nextNotes.splice(noteIdx, 1)
     } else {
+      if (nextNotes.length === 10) {
+        // Disallow more than 10 notes. This is more fingers than the average person has.
+        // Duets are not supported.
+        return
+      }
       nextNotes.push(noteName)
     }
 
